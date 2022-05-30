@@ -9,51 +9,21 @@
       </div>
       <div class="login-model">
         <div class="content">
-          <div class="text-center text-2xl font-semibold mb-5">后台管理系统模板</div>
           <el-form ref="formRef" :model="loginForm" :rules="formRules">
-            <el-tabs id="login-tab" v-model="activeTab" @tab-click="handleTabClick">
-              <div class="tip"></div>
-              <el-tab-pane label="账号登录" name="password">
-                <el-form-item label="" prop="phone">
-                  <el-input v-model="loginForm.phone" type="number" placeholder="请输入手机号">
-                    <template #prefix>
-                      <el-icon><iphone /></el-icon>
-                    </template>
-                  </el-input>
-                </el-form-item>
-                <el-form-item v-if="activeTab === 'password'" prop="password">
-                  <el-input v-model="loginForm.password" type="password" placeholder="请输入密码">
-                    <template #prefix>
-                      <el-icon><lock /></el-icon>
-                    </template>
-                  </el-input>
-                </el-form-item>
-              </el-tab-pane>
-              <el-tab-pane label="验证码登录" name="code">
-                <el-form-item label="" prop="phone">
-                  <el-input v-model="loginForm.phone" placeholder="请输入手机号">
-                    <template #prefix>
-                      <el-icon><iphone /></el-icon>
-                    </template>
-                  </el-input>
-                </el-form-item>
-                <el-form-item v-if="activeTab === 'code'" prop="code" class="code-item">
-                  <el-input v-model="loginForm.code" maxlength="6" placeholder="请输入验证码">
-                    <template #prefix>
-                      <el-icon><discount /></el-icon>
-                    </template>
-                  </el-input>
-                  <el-button
-                    type="text"
-                    :loading="codeLoading"
-                    :class="{ disabled: codeText !== '获取验证码' && codeText !== '重新发送' }"
-                    @click="handleCode"
-                  >
-                    {{ codeText }}
-                  </el-button>
-                </el-form-item>
-              </el-tab-pane>
-            </el-tabs>
+            <el-form-item label="" prop="phone">
+              <el-input v-model="loginForm.phone" type="number" placeholder="请输入手机号">
+                <template #prefix>
+                  <el-icon><iphone /></el-icon>
+                </template>
+              </el-input>
+            </el-form-item>
+            <el-form-item v-if="activeTab === 'password'" prop="password">
+              <el-input v-model="loginForm.password" type="password" placeholder="请输入密码">
+                <template #prefix>
+                  <el-icon><lock /></el-icon>
+                </template>
+              </el-input>
+            </el-form-item>
             <el-form-item class="footer-btn">
               <el-button type="primary" :loading="loginLoading" @click="loginFun">
                 登 录
@@ -72,23 +42,17 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs, onMounted } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { onKeyStroke } from '@vueuse/core'
-import { ElForm, ElFormItem, ElInput, ElTabs, ElTabPane, ElMessage, ElIcon } from 'element-plus'
-import { login } from '@/api/login'
+import { ElForm, ElFormItem, ElInput, ElIcon } from 'element-plus'
 import { setToken } from '@/utils/auth'
-import { isPhone } from '@/utils/validation'
 import elv from '@/utils/elValidation'
-import store from '@/store'
+import { useUserStore } from '@/pinia-store'
 import router from '@/router'
-let timer: any
 
-
-const time = ref(60)
-const codeLoading = ref(false)
+const userStore = useUserStore()
 const loginLoading = ref(false)
 const activeTab = ref('password')
-const codeText = ref('获取验证码')
 const formRef = ref<any>(null)
 const form = reactive({
   loginForm: {
@@ -111,40 +75,6 @@ onMounted(() => {
     loginFun()
   })
 })
-// 切换登录方式
-let tabIndex = '0'
-const handleTabClick = (item) => {
-  if (tabIndex === item.index) return
-  tabIndex = item.index
-}
-// 获取验证码
-const handleCode = () => {
-  if (!(codeText.value === '获取验证码' || codeText.value === '重新发送')) return
-
-  if (form.loginForm.phone === '') {
-    ElMessage.error('请输入手机号')
-    return
-  }
-  if (!isPhone(form.loginForm.phone)) return
-  codeLoading.value = true
-  codeText.value = time.value + 's'
-  timer = setInterval(() => {
-    codeText.value = --time.value + 's'
-    if (time.value <= 0) {
-      clearInterval(timer)
-      time.value = 60
-      codeText.value = '重新发送'
-    }
-  }, 1000)
-  ElMessage.success('验证码发送成功')
-  codeLoading.value = false
-  form.loginForm.code = '1234'
-  if (timer) {
-    clearInterval(timer)
-    time.value = 60
-    codeText.value = '重新发送'
-  }
-}
 
 // 触发登录
 const loginFun = () => {
@@ -153,19 +83,30 @@ const loginFun = () => {
     if (valid) {
       // 验证通过
       loginLoading.value = true
-      login(form.loginForm)
-        .then((res) => {
-          setToken(res.token)
-          loginLoading.value = false
-          store.commit('user/updateUserInfo', {
-            userId: res.userId,
-            userName: res.name
-          })
-          router.push('/home')
+      // login(form.loginForm)
+      //   .then((res: any) => {
+      //     setToken(res.token)
+      //     loginLoading.value = false
+      //     store.commit('user/updateUserInfo', {
+      //       userId: res.userId,
+      //       userName: res.name
+      //     })
+      //     router.push('/home')
+      //   })
+      //   .catch(() => {
+      //     loginLoading.value = false
+      //   })
+      setTimeout(()=>{
+        setToken('abcdefghijklmnopqrstuvwxyz')
+        userStore.$patch({
+          userId: '007',
+          userName: '周杰伦',
+          phone: '13000000000',
+          company: '随便什么有限公司'
         })
-        .catch(() => {
-          loginLoading.value = false
-        })
+        router.push('/home')
+        loginLoading.value = false
+      }, 1200)
     } else {
       return false
     }
@@ -383,7 +324,7 @@ footer {
 }
 
 .footer-btn {
-  padding: 0 45px;
+  // padding: 0 45px;
   margin-bottom: 30px;
 
   .el-button {

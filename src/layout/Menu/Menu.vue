@@ -1,21 +1,20 @@
 <template>
   <el-scrollbar class="menu-container">
-    <el-menu :collapse="isCollapse" :default-active="activeMenu" unique-opened>
-      <MenuItem :menu-list="menuList" :default-menus="menus" />
+    <el-menu :collapse="appStore.isCollapse" :default-active="activeMenu">
+      <MenuItem :menu-list="menuList" :default-menus="defaultMenus" />
     </el-menu>
   </el-scrollbar>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue'
-import { useStore } from 'vuex'
+import { ref, watch } from 'vue'
+import { useAppStore } from '@/pinia-store'
 import { useRoute } from 'vue-router'
 import { ElScrollbar, ElMenu } from 'element-plus'
 import MenuItem from './MenuItem.vue'
-import menus from '@/utils/menus'
-import { getMenus } from '@/api/index'
+import defaultMenus from './defaultMenus'
 const route = useRoute()
-const store = useStore()
+const appStore = useAppStore()
 const activeMenu = ref('')
 const menuList = [
   {
@@ -23,13 +22,13 @@ const menuList = [
     name: '首页'
   },
   {
-    id: 'base_information',
+    id: 'base',
     name: '基础信息管理',
     children: [
       {
-        id: 'role',
-        name: '角色管理',
-        path: '/role'
+        id: 'table',
+        name: '表格表单展示',
+        path: '/base/table'
       },
       {
         id: 'mock',
@@ -39,7 +38,7 @@ const menuList = [
     ]
   },
   {
-    id: 'system_config',
+    id: 'setting',
     name: '系统设置',
     children: [
       {
@@ -50,22 +49,6 @@ const menuList = [
     ]
   }
 ]
-
-// 获取菜单
-// const getMenuList = () => {
-//   getMenus().then((res: any) => {
-//     const customMenus = [
-//       {
-//         id: 'home',
-//         name: '首页',
-//         children: <any>[]
-//       }
-//     ]
-//     const result = customMenus.concat(res as any[])
-//     menuList.value = result
-//   })
-// }
-// getMenuList()
 watch(
   () => route,
   (val) => {
@@ -77,7 +60,6 @@ watch(
   },
   { immediate: true }
 )
-const isCollapse = computed(() => store.state.layout.isCollapse)
 </script>
 
 <style lang="scss" scoped>

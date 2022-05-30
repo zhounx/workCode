@@ -35,7 +35,7 @@ import {
 import { useUserStore, useAppStore } from '@/pinia-store'
 import { useRouter } from 'vue-router'
 import { removeToken } from '@/utils/auth'
-import avatarImg from '@/assets/imgs/default-avatar.png'
+import avatar from '@/assets/imgs/default-avatar.png'
 // interface Props {
 //   isCollapse: boolean
 // }
@@ -43,8 +43,6 @@ import avatarImg from '@/assets/imgs/default-avatar.png'
 const userStore = useUserStore()
 const appStore = useAppStore()
 const router = useRouter()
-
-const avatar = avatarImg
 
 // 点击菜单缩起展开
 const handleCollapseClick = () => {

@@ -2,7 +2,7 @@
   <el-container>
     <!-- 头部 -->
     <el-header style="height: 50px">
-      <Header :is-collapse="isCollapse" />
+      <Header />
     </el-header>
 
     <!-- 侧边菜单栏 -->
@@ -11,8 +11,8 @@
     </div>
 
     <!-- 主体内容 -->
-    <el-main id="nucarf-main" :class="[isCollapse ? 'isCollapse' : '']">
-      <el-scrollbar v-if="userInfo.userId">
+    <el-main id="nucarf-main" :class="[appStore.isCollapse ? 'isCollapse' : '']">
+      <el-scrollbar v-if="userStore.userId">
         <!-- 主体部分 -->
         <router-view />
       </el-scrollbar>
@@ -21,17 +21,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useUserStore, useAppStore } from '@/pinia-store'
 import { ElContainer, ElMain, ElScrollbar, ElHeader } from 'element-plus'
 import Header from './Header.vue'
 import Menu from './Menu/Menu.vue'
 
-const store = useStore() 
-
-// store.dispatch('user/getUserInfo')
-const userInfo = computed(() => store.state['user'].userInfo)
-const isCollapse = computed(() => store.state.layout.isCollapse)
+const userStore = useUserStore()
+const appStore = useAppStore()
 
 </script>
 

@@ -8,7 +8,7 @@
           </div>
           <div class="userRight">
             <h2 class="name">
-              你好，<span>{{ userInfo.userName }}</span>
+              你好，<span>{{ userStore.userName }}</span>
             </h2>
             <p class="loginTime">登录日期：{{ currentTime }}</p>
             <p class="userWord">{{ soulWord }}</p>
@@ -22,7 +22,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { ElRow, ElCol } from 'element-plus'
-import { useStore } from 'vuex'
+import { useUserStore } from '@/pinia-store'
 import { random } from 'lodash-es'
 import dayjs from 'dayjs'
 import soulSoother from '@/assets/typings/home'
@@ -31,8 +31,7 @@ const word = soulSoother[random(0, soulSoother.length - 1)]
 const soulWord = ref(word)
 const currentTime = ref<string>(dayjs().format('YYYY-MM-DD'))
 
-const store = useStore()
-const userInfo = computed(() => store.state.user.userInfo)
+const userStore = useUserStore()
 
 </script>
 

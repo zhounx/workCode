@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig, AxiosResponse }  from 'axios'
 import { ElMessage } from 'element-plus'
 import { getToken } from '@/utils/auth'
 import router from '@/router'
-
+console.log('环境：', import.meta.env)
 // 创建axios实例
 const service = axios.create({
   baseURL: '/mock/126012/api',

@@ -17,11 +17,11 @@ export const useUserStore = defineStore('userStore', {
 
   },
   actions: {
-    updateUserInfo({ userId, userName, phone, company }){
-      this.userId = userId
-      this.userName = userName
-      this.phone = phone
-      this.company = company
-    }
+    // updateUserInfo({ userId, userName, phone, company }){
+    //   this.userId = userId
+    //   this.userName = userName
+    //   this.phone = phone
+    //   this.company = company
+    // }
   }
 })

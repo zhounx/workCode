@@ -3,7 +3,7 @@
     <h1 class="">404</h1>
     <p>哎呀，您要查找的页面不存在。</p>
     <div>
-      <el-button type="warning" @click="goHome"> 返 回 </el-button>
+      <el-button type="primary" @click="goHome"> 返 回 </el-button>
     </div>
   </div>
 </template>
@@ -19,9 +19,9 @@ const goHome = () => {
 <style lang="scss" scoped>
 .wrap {
   text-align: center;
-  background-color: #ffc107;
+  background-color: $error;
   padding: 40px 0;
-  min-height: 100%;
+  min-height: 100vh;
   box-sizing: border-box;
 
   &::before {
@@ -42,7 +42,7 @@ const goHome = () => {
   }
 
   p {
-    color: #000;
+    color: #fff;
     margin: 50px 0;
     font-size: 1.55rem;
     font-family: cursive;
@@ -54,7 +54,7 @@ const goHome = () => {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   padding: 12px 40px;
   transform: translate3d(0, 0, 0);
-  background-color: #ffa000;
+  background-color: $primary;
   transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
     background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
     transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -62,8 +62,8 @@ const goHome = () => {
   &:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
     transform: translate3d(0, -1px, 0);
-    background-color: #ffa000;
-    border-color: #ffa000;
+    background-color: $primary;
+    border-color: $primary;
   }
 }
 </style>
