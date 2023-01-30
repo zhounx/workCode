@@ -1,0 +1,71 @@
+#app {
+    height: 100vh;
+    width: 100%;
+    min-width:1200px;
+    font-family: Noto Sans S Chinese;
+}
+html,
+body,
+p,ul,ol,li {
+    margin: 0;
+    padding: 0;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h4,
+h6 {
+    margin: 0;
+    padding: 0;
+}
+
+input[type="password"]::-ms-reveal {
+    display: none;
+}
+
+*::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background-color: #b5b1b1;
+}
+
+*::-webkit-scrollbar-track {
+    /* //scroll轨道背景 */
+    background-color: #fff;
+}
+
+*::-webkit-scrollbar-thumb {
+    /* //滚动条中能上下移动的小块 */
+    border-radius: 10px;
+    background-color: #CCC;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    box-shadow: 0 0 0 1000px white inset; // 背景设为白色
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+textarea:focus {
+    box-shadow: 0 0 0 1000px white inset; // 获得焦点时背景设为白色
+}
+
+//解决ElMessageBox 样式丢失问题
+.el-message-box__status.el-icon {
+    position: absolute;
+}
+.el-message-box__status {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px!important;
+}

@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "strict": true,
+    "jsx": "preserve",
+    "allowJs": true, // 允许编译器编译JS，JSX文件
+    "checkJs": true, // 允许在JS文件中报错，通常与allowJS一起使用
+    "sourceMap": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "paths": {
+      "@/*": ["src/*"],
+      "@utils/*": ["src/utils/*"],
+      "@assets/*": ["src/assets/*"],
+    },
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "skipLibCheck": true,
+    "types": ["vite/client"]
+  },
+  "include": ["vite.config.*", "env.d.ts", "src/**/*", "src/**/*.vue","src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx",],
+}
